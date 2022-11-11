@@ -1,0 +1,12 @@
+{
+  "name": "@common/server",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "packageManager": "yarn@3.2.4",
+  "dependencies": {
+    "winston": "^3.8.2"
+  }
+}
