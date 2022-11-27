@@ -1,9 +1,6 @@
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
-import { EntitySchema } from "typeorm";
 
-export const getTypeormConfig = (
-  entities: EntitySchema[]
-): TypeOrmModuleOptions => {
+export const getTypeormConfig = (entities): TypeOrmModuleOptions => {
   return {
     type: "mysql",
     host: process.env.DB_HOST || "127.0.0.1",
