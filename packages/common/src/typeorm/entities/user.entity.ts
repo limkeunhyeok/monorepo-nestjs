@@ -4,7 +4,7 @@ import { RoleEnum } from "../../constants/enums";
 import { BaseEntity } from "./base.entity";
 import { PostEntity } from "./post.entity";
 
-@Entity()
+@Entity("User")
 export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   @ApiProperty({ description: "사용자 id" })

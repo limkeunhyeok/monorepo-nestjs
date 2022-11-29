@@ -3,10 +3,9 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   VersionColumn,
-  BaseEntity as Base,
 } from "typeorm";
 
-export class BaseEntity extends Base {
+export class BaseEntity {
   @CreateDateColumn()
   createdAt?: Date;
 
