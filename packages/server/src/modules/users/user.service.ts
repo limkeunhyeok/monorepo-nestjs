@@ -1,15 +1,9 @@
 import { UserEntity } from '@common/server';
-import { RoleEnum } from '@common/server/src/constants/enums';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsWhere, Repository } from 'typeorm';
-
-export interface createUser {
-  email: string;
-  username: string;
-  password: string;
-  type: RoleEnum;
-}
+import { CreatedUserDto } from './dto/created-user.dto';
+import { UpdatedUserDto } from './dto/updated-user.dto';
 
 @Injectable()
 export class UserService {
@@ -18,13 +12,13 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async createUser({
+  async createdUser({
     email,
     username,
     password,
     type,
-  }: createUser): Promise<UserEntity> {
-    const hasUser = await this.userRepository.findOneByOrFail({ email });
+  }: CreatedUserDto): Promise<UserEntity> {
+    const hasUser = await this.userRepository.findOneBy({ email });
     if (hasUser) {
       throw new BadRequestException('None exists user.');
     }
@@ -60,16 +54,15 @@ export class UserService {
     return hasUser;
   }
 
-  async updateOneUser(
-    id,
-    { email, password, username, type },
+  async updatedOneUser(
+    id: number,
+    { password, username, type }: UpdatedUserDto,
   ): Promise<UserEntity> {
     const hasUser = await this.userRepository.findOneBy({ id });
     if (hasUser) {
       throw new BadRequestException('None exists user.');
     }
 
-    hasUser.email = email;
     hasUser.password = password;
     hasUser.username = username;
     hasUser.type = type;
@@ -79,7 +72,7 @@ export class UserService {
     return hasUser;
   }
 
-  async deleteOneUser(id): Promise<UserEntity> {
+  async deletedOneUser(id: number): Promise<UserEntity> {
     const hasUser = await this.userRepository.findOneBy({ id });
     if (hasUser) {
       throw new BadRequestException('None exists user.');

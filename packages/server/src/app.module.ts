@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as path from 'path';
 import { getTypeormConfig, PostEntity, UserEntity } from '@common/server';
+import { UserModule } from './modules/users/user.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { getTypeormConfig, PostEntity, UserEntity } from '@common/server';
       isGlobal: true,
     }),
     TypeOrmModule.forRoot(getTypeormConfig([UserEntity, PostEntity])),
+    UserModule,
   ],
   controllers: [],
   providers: [],
