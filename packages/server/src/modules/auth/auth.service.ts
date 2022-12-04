@@ -1,3 +1,4 @@
+import { UserEntity } from '@common/server';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
@@ -14,14 +15,16 @@ export class AuthService {
     private readonly userService: UserService,
   ) {}
 
-  async validateUser({ email, password }: LoginDto): Promise<boolean> {
+  async validateUser({
+    email,
+    password,
+  }: LoginDto): Promise<UserEntity | null> {
     const user = await this.userService.findOneUserByEmail(email);
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (isMatch) {
-      return true;
+    if (user && bcrypt.compareSync(password, user.password)) {
+      return user;
     }
-    return false;
+    return null;
   }
 
   createTokens({ userId, type }: JwtPayload): JwtTokens {
