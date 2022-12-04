@@ -54,6 +54,15 @@ export class UserService {
     return hasUser;
   }
 
+  async findOneUserByEmail(email: string): Promise<UserEntity> {
+    const hasUser = await this.userRepository.findOneBy({ email });
+    if (hasUser) {
+      throw new BadRequestException('None exists user.');
+    }
+
+    return hasUser;
+  }
+
   async updatedOneUser(
     id: number,
     { password, username, type }: UpdatedUserDto,
