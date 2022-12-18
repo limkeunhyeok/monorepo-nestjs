@@ -1,14 +1,14 @@
-import { ApiDocsModule, LoggingInterceptor } from '@common/server';
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { ApiDocsModule, winstonLogger } from '@common/server';
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: winstonLogger,
+  });
 
   ApiDocsModule.register(app);
-
-  app.useGlobalInterceptors(new LoggingInterceptor(Logger));
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   await app.listen(3000);
