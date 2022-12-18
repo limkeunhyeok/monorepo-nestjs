@@ -41,3 +41,9 @@ nodeLinker: node-modules
 
 1. eslint 공통으로 뺄 것
 2. tsconfig 공통으로 뺄 것
+
+### 그 외 기타
+
+- 어지간하면 nest에서 제공하는 것을 사용하자
+  - 예를 들어 환경변수를 config를 모듈을 통해 만들었을 때, process.env는 네스트 모듈로 만들지 않는 이상 안먹는다.
+    - 물론 다른 잡다한 방법이 있겠지만, nest를 쓰는 이상 nest 만든 사람들의 의도를 따르는게 좋을 거 같다.

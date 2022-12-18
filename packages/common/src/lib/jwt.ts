@@ -1,5 +1,5 @@
+import { UnauthorizedException } from "@nestjs/common";
 import { sign, SignOptions, verify, VerifyOptions } from "jsonwebtoken";
-import { CustomException, ExceptionCode } from "../exceptions";
 
 export interface TokenPayload {
   userId: string;
@@ -25,10 +25,6 @@ export const verifyToken = (
       ...options,
     }) as TokenPayload;
   } catch (error) {
-    throw new CustomException(
-      error.message,
-      error,
-      ExceptionCode.VERIFY_TOKEN_FAIL
-    );
+    throw new UnauthorizedException(error);
   }
 };
