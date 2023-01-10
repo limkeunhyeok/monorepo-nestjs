@@ -1,5 +1,4 @@
-import { ApiDocsModule, winstonLogger } from '@common/server';
-import { ValidationPipe } from '@nestjs/common';
+import { ApiDocsModule, ValidationPipe, winstonLogger } from '@common/server';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
@@ -8,9 +7,10 @@ async function bootstrap() {
     logger: winstonLogger,
   });
 
+  app.useGlobalPipes(new ValidationPipe());
+
   ApiDocsModule.register(app);
 
-  app.useGlobalPipes(new ValidationPipe({ transform: true }));
   await app.listen(3000);
 }
 bootstrap();
